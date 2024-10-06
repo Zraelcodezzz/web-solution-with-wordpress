@@ -1,0 +1,57 @@
+Creating Linux Partitions with fdisk
+
+Introduction
+Partitioning a disk is a key step in setting up a Linux system. It involves dividing a disk into sections that can be managed separately. This helps with organization, boosts performance, and simplifies data management. The fdisk tool is essential for creating and managing disk partitions in Linux. It is particularly useful for handling MBR (Master Boot Record) partitions but can also work with GPT (GUID Partition Table) partitions.
+
+Fdisk
+fdisk is a command-line tool for managing disk partitions. It offers a menu-driven interface to create, delete, and modify partitions on a disk. While it is suitable for both MBR and GPT partitioning schemes, it is more commonly associated with MBR.
+
+Usage: Invoke fdisk with the disk device as an argument (e.g., sudo fdisk /dev/sda). It will then display a menu of options for managing partitions.
+Commands: Common fdisk commands include n to create a new partition, d to delete a partition, p to print the partition table, and w to write changes to the disk.
+MBR Scheme
+The Master Boot Record (MBR) is an older partitioning method that has been used since the early days of personal computing. It supports disks up to 2 TB in size and allows for a maximum of four primary partitions. If more partitions are needed, one primary partition can be turned into an extended partition, which can then hold multiple logical partitions.
+
+Structure: The MBR is located at the beginning of the disk and contains the bootloader, partition table, and a signature. The partition table can include entries for up to four primary partitions.
+Limitations: MBR's main drawbacks are its 2 TB disk size limit and the restriction of only four primary partitions. To get around this, one primary partition can be converted into an extended partition, which can hold several logical partitions.
+GPT Scheme
+The GUID Partition Table (GPT) is a newer partitioning method that is part of the UEFI (Unified Extensible Firmware Interface) standard. It supports disks larger than 2 TB and allows for nearly unlimited partitions. GPT also offers better data integrity and recovery options compared to MBR.
+
+Structure: GPT saves multiple copies of the partition table on the disk, enhancing recovery chances in case of corruption. It also features CRC32 checksums to catch errors.
+Advantages: GPT supports larger disks, more partitions, and includes redundancy and error-checking features. It is the preferred choice for modern systems.
+Creating a New Partition
+To create a new partition with fdisk, follow these steps:
+
+Open fdisk: In a terminal, run sudo fdisk /dev/sdX, replacing /dev/sdX with the correct disk identifier (e.g., /dev/sda).
+
+List Partitions: Type p to display the current partitions on the disk, which helps you understand its layout.
+
+Create a New Partition: Type n to start creating a new partition. You'll be prompted to choose between a primary or extended partition; select p for primary or e for extended.
+
+Specify Partition Number: Enter the partition number (1-4 for primary partitions).
+
+Specify First Sector: Press Enter to accept the default first sector or provide a different starting point.
+
+Specify Last Sector: Press Enter to accept the default last sector or specify the partition size (e.g., +10G for a 10 GB partition).
+
+Write Changes: Type w to save the changes to the disk and exit fdisk. This step is crucial for saving the partition table.
+
+Change Partition Type
+To change a partition's type using fdisk, follow these steps:
+
+Open fdisk: In a terminal, run sudo fdisk /dev/sdX, replacing /dev/sdX with the correct disk identifier.
+
+List Partitions: Type p to show the current partitions on the disk.
+
+Select Partition: Type t to change the partition type.
+
+Specify Partition Number: Enter the number of the partition you want to modify.
+
+Enter Hex Code: Input the hex code for the desired partition type (e.g., 83 for a Linux filesystem, 82 for Linux swap). You can list all available types by typing L.
+
+Write Changes: Type w to save the changes to the disk and exit fdisk.
+
+VirtualBox
+VirtualBox is popular virtualization software that lets you run multiple operating systems on a single physical machine. When setting up a Linux virtual machine (VM) in VirtualBox, you can use fdisk to partition the virtual disk just like you would with a physical disk.
+
+Creating a VM: During the VM setup in VirtualBox, you can specify the size of the virtual disk, which can then be partitioned using fdisk within the VM.
+Partitioning: The partitioning process for a virtual disk in VirtualBox is the same as that for a physical disk, making it a great tool for learning and experimenting with disk partitioning.
